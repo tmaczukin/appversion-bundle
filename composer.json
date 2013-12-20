@@ -1,0 +1,29 @@
+{
+	"name": "maczukin/version-tools-bundle",
+	"description": "Version tools for application",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tomasz Maczukin",
+			"email": "tomasz@maczukin.pl"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"symfony/yaml": "~2.0",
+		"symfony/framework-bundle": "~2.0",
+		"symfony/dependency-injection": "~2.0",
+		"symfony/config": "~2.0",
+		"symfony/filesystem": "~2.0",
+		"symfony/console": "~2.0",
+		"twig/twig": "~1.11"
+	},
+	"require-dev": {
+		"composer/composer": "*"
+	},
+	"autoload": {
+		"psr-0": {"Maczukin\\VersionToolsBundle": ""}
+	},
+	"target-dir": "Maczukin/VersionToolsBundle",
+	"minimum-stability": "dev"
+}
