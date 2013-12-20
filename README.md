@@ -119,10 +119,10 @@ In addition to the command console there is also available a twig extension. In 
 
 You can output a default version format by using `{{ version_tools }}`, set your own format `{{ version_tools.versionString('%major%.%minor%.%patch%%pre-release%%build%') }}` or use object like an entity and output individual object fields, eg. `{{ version_tools.major }}`.
 
-## TODO for version 1.0.0
+## TODO for version
 
-* add copyrights informations to version info (validation.yml and output)
-* rename Maczukin\VersionsToolBundle\Tool\Version to Maczukin\VersionsToolBundle\Tool\VersionTool
-* use maczukin_version_tools.file setting in VersionTool
-* add configuration for continuous integration software (travis or jenkins) with static code analysis and generating documentation from PHPDoc comment blocks
-* add unit tests and integrate them with CI software
+* [1.0.0] add copyrights informations to version info (validation.yml and output)
+* ~~[1.0.0] rename Maczukin\VersionsToolBundle\Tool\Version to Maczukin\VersionsToolBundle\Tool\VersionTool~~
+* [1.0.0] use maczukin_version_tools.file setting in VersionTool
+* [?] add configuration for continuous integration software (travis or jenkins) with static code analysis and generating documentation from PHPDoc comment blocks
+* [?] add unit tests and integrate them with CI software

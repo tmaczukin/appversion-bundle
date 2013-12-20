@@ -28,7 +28,7 @@ namespace Maczukin\VersionToolsBundle\Composer;
 
 use Composer\Script\Event,
 	Composer\IO\IOInterface;
-use Maczukin\VersionToolsBundle\Tool\Version;
+use Maczukin\VersionToolsBundle\Tool\VersionTool;
 
 /**
  * ScriptHandler
@@ -89,11 +89,11 @@ class ScriptHandler {
 
 	/**
 	 * @param string $versioningFile
-	 * @return Version|null
+	 * @return VersionTool|null
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	protected function getVersion($versioningFile) {
-		$version = new Version();
+		$version = new VersionTool();
 		$version
 				->setConfigFile($versioningFile)
 				->readFile();
@@ -123,10 +123,10 @@ class ScriptHandler {
 	}
 
 	/**
-	 * @param \Maczukin\VersionToolsBundle\Tool\Version $version
+	 * @param VersionTool $version
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	protected function setMainInformation(Version $version) {
+	protected function setMainInformation(VersionTool $version) {
 		$major = $this->getValue('major', $version->getMajor());
 		$minor = $this->getValue('minor', $version->getMinor());
 		$patch = $this->getValue('patch', $version->getPatch());
@@ -146,10 +146,10 @@ class ScriptHandler {
 	}
 
 	/**
-	 * @param \Maczukin\VersionToolsBundle\Tool\Version $version
+	 * @param VersionTool $version
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	protected function setCreditsInformation(Version $version) {
+	protected function setCreditsInformation(VersionTool $version) {
 		$this->io->write("\n<info>Add authors (only [a-zA-Z0-9 ]+ for Author Name is allowed!)</info>");
 
 		$credits = array();

@@ -32,7 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
 	Symfony\Component\Console\Input\InputInterface,
 	Symfony\Component\Console\Input\InputOption,
 	Symfony\Component\Console\Output\OutputInterface;
-use Maczukin\VersionToolsBundle\Tool\Version;
+use Maczukin\VersionToolsBundle\Tool\VersionTool;
 
 /**
  * VersionCommand
@@ -57,9 +57,9 @@ class VersionCommand extends ContainerAwareCommand {
 	protected $output;
 
 	/**
-	 * @var Version
+	 * @var VersionTool
 	 */
-	protected $version;
+	protected $versionTool;
 
 	/**
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
@@ -235,20 +235,20 @@ class VersionCommand extends ContainerAwareCommand {
 	}
 
 	/**
-	 * @param \Maczukin\DevToolsBundle\Tool\Version $version
+	 * @param VersionTool $version
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	protected function printBasicInfo(Version $version) {
+	protected function printBasicInfo(VersionTool $version) {
 		$this->output->writeln('');
 		$this->output->writeln(sprintf("<row>     Environment:  <value>%s", $version->getEnvironment()));
 		$this->output->writeln($version->getVersionString("<row>         Version:  <value-important>%major%.%minor%.%patch%%pre-release%<value-additional>%build%"));
 	}
 
 	/**
-	 * @param Version $version
+	 * @param VersionTool $version
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	protected function printDetailedInfo(Version $version) {
+	protected function printDetailedInfo(VersionTool $version) {
 		$this->printField("<row>           Major:  <value>%s", $version->getMajor());
 		$this->printField("<row>           Minor:  <value>%s", $version->getMinor());
 		$this->printField("<row>           Patch:  <value>%s", $version->getPatch());
@@ -271,10 +271,10 @@ class VersionCommand extends ContainerAwareCommand {
 	}
 
 	/**
-	 * @param Version $version
+	 * @param VersionTool $version
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	protected function printAuthorsInfo(Version $version) {
+	protected function printAuthorsInfo(VersionTool $version) {
 		$credits = $version->getCredits();
 		if (empty($credits) === true) {
 			return null;
@@ -300,15 +300,15 @@ class VersionCommand extends ContainerAwareCommand {
 	}
 
 	/**
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	protected function getVersionTool() {
-		if ($this->version === null) {
-			$this->version = $this->getContainer()->get('maczukin_version_tools.version');
+		if ($this->versionTool === null) {
+			$this->versionTool = $this->getContainer()->get('maczukin_version_tools.version');
 		}
 
-		return $this->version;
+		return $this->versionTool;
 	}
 
 }

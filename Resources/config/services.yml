@@ -1,6 +1,6 @@
 services:
   maczukin_version_tools.version:
-    class: Maczukin\VersionToolsBundle\Tool\Version
+    class: Maczukin\VersionToolsBundle\Tool\VersionTool
     calls:
       - [setContainer, ["@service_container"]]
 

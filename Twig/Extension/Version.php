@@ -26,7 +26,7 @@
 
 namespace Maczukin\VersionToolsBundle\Twig\Extension;
 
-use Maczukin\VersionToolsBundle\Tool\Version as VersionTool;
+use Maczukin\VersionToolsBundle\Tool\VersionTool;
 
 /**
  * Version

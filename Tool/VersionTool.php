@@ -31,11 +31,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface,
 	Symfony\Component\Yaml\Yaml;
 
 /**
- * Version
+ * VersionTool
  *
  * @author Tomasz Maczukin <tomasz@maczukin.pl>
  */
-class Version {
+class VersionTool {
 
 	const STRING_FORMAT = '%major%.%minor%.%patch%%pre-release%%build% (deploy-ts: %deploy-timestamp%) %commit%';
 
@@ -101,7 +101,7 @@ class Version {
 
 	/**
 	 * @param ContainerInterface $container
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setContainer(ContainerInterface $container) {
@@ -143,7 +143,7 @@ class Version {
 
 	/**
 	 * @param string $configFile
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setConfigFile($configFile) {
@@ -193,7 +193,7 @@ class Version {
 	}
 
 	/**
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setCommit() {
@@ -227,7 +227,7 @@ class Version {
 
 	/**
 	 * @param integer $major
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setMajor($major) {
@@ -246,7 +246,7 @@ class Version {
 
 	/**
 	 * @param integer $minor
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setMinor($minor) {
@@ -265,7 +265,7 @@ class Version {
 
 	/**
 	 * @param integer $patch
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setPatch($patch) {
@@ -284,7 +284,7 @@ class Version {
 
 	/**
 	 * @param string $preRelease
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setPreRelease($preRelease) {
@@ -306,7 +306,7 @@ class Version {
 
 	/**
 	 * @param string $build
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setBuild($build) {
@@ -328,7 +328,7 @@ class Version {
 
 	/**
 	 * @param mixed $deployTimestamp
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setDeployTimestamp($deployTimestamp) {
@@ -347,7 +347,7 @@ class Version {
 
 	/**
 	 * @param string $license
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setLicense($license) {
@@ -366,7 +366,7 @@ class Version {
 
 	/**
 	 * @param array $credits
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setCredits(array $credits) {
@@ -378,7 +378,7 @@ class Version {
 	}
 
 	/**
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function clearCredits() {
@@ -389,7 +389,7 @@ class Version {
 
 	/**
 	 * @param string $author
-	 * @return Version
+	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function addAuthor($author) {
