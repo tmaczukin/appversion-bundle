@@ -121,8 +121,8 @@ You can output a default version format by using `{{ version_tools }}`, set your
 
 ## TODO
 
-* add copyrights informations
+* add copyrights informations to version info (validation.yml and output)
 * rename Maczukin\VersionsToolBundle\Tool\Version to Maczukin\VersionsToolBundle\Tool\VersionTool
 * use maczukin_version_tools.file setting in VersionTool
 * add configuration for continuous integration software (travis or jenkins) with static code analysis and generating documentation from PHPDoc comment blocks
-* add unit tests
+* add unit tests and integrate them with CI software
