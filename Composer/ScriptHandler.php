@@ -118,6 +118,7 @@ class ScriptHandler {
 		$this->io->write("<info>           build</info> - build number; increase after each build, eg +build.256, build.20131211100101;");
 		$this->io->write("<info>deploy-timestamp</info> - timstamp of last deplop; timestamp format must be known for strtotime()");
 		$this->io->write("<info>         license</info> - license identification, eg. MIT, GPL 2.0;");
+		$this->io->write("<info>       copyright</info> - copyright informations;");
 		$this->io->write("\nVersion information are compatible with 'Semantic Versioning 2.0.0' specification.");
 		$this->io->write("More info about 'Semantic Versioning': http://semver.org/ and https://github.com/mojombo/semver\n");
 	}
@@ -134,6 +135,7 @@ class ScriptHandler {
 		$build = $this->getValue('build', $version->getBuild());
 		$deployTimestamp = $this->getValue('deploy-timestamp', $version->getDeployTimestamp());
 		$license = $this->getValue('license', $version->getLicense());
+		$copyright = $this->getValue('copyright', $version->getCopyright());
 
 		$version
 				->setMajor($major)
@@ -142,7 +144,8 @@ class ScriptHandler {
 				->setPreRelease($preRelease)
 				->setBuild($build)
 				->setDeployTimestamp($deployTimestamp)
-				->setLicense($license);
+				->setLicense($license)
+				->setCopyright($copyright);
 	}
 
 	/**

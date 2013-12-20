@@ -57,6 +57,11 @@ class VersionTool {
 	/**
 	 * @var string
 	 */
+	protected $copyright;
+
+	/**
+	 * @var string
+	 */
 	protected $environment;
 
 	/**
@@ -109,15 +114,16 @@ class VersionTool {
 		$this->configFile = realpath($this->container->getParameter('kernel.root_dir').DIRECTORY_SEPARATOR.'config').DIRECTORY_SEPARATOR.'version.yml';
 		$this->environment = $this->container->get('kernel')->getEnvironment();
 
-		$this->setCommit();
-		$this->setMajor($this->getContainerParameter('major'));
-		$this->setMinor($this->getContainerParameter('minor'));
-		$this->setPatch($this->getContainerParameter('patch'));
-		$this->setPreRelease($this->getContainerParameter('preRelease'));
-		$this->setBuild($this->getContainerParameter('build'));
-		$this->setDeployTimestamp($this->getContainerParameter('deployTimestamp'));
-		$this->setLicense($this->getContainerParameter('license'));
-		$this->setCredits($this->getContainerParameter('credits'));
+		$this->setCommit()
+				->setMajor($this->getContainerParameter('major'))
+				->setMinor($this->getContainerParameter('minor'))
+				->setPatch($this->getContainerParameter('patch'))
+				->setPreRelease($this->getContainerParameter('preRelease'))
+				->setBuild($this->getContainerParameter('build'))
+				->setDeployTimestamp($this->getContainerParameter('deployTimestamp'))
+				->setLicense($this->getContainerParameter('license'))
+				->setCopyright($this->getContainerParameter('copyright'))
+				->setCredits($this->getContainerParameter('credits'));
 
 		return $this;
 	}
@@ -171,6 +177,7 @@ class VersionTool {
 			'%build%' => $build,
 			'%deploy-timestamp%' => $deployTimestamp,
 			'%commit%' => $commit,
+			'%copyright%' => $this->copyright,
 		);
 
 		return trim(str_replace(array_keys($replaces), $replaces, $format));
@@ -205,6 +212,25 @@ class VersionTool {
 
 		$error = $return !== 0 ? 'Error occured or git is not supported!' : null;
 		$this->commit = empty($commit) !== true ? $commit : $error;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function getCopyright() {
+		return $this->copyright;
+	}
+
+	/**
+	 * @param string $copyright
+	 * @return VersionTool
+	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function setCopyright($copyright) {
+		$this->copyright = $copyright;
 
 		return $this;
 	}
@@ -288,10 +314,7 @@ class VersionTool {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setPreRelease($preRelease) {
-		$preRelease = preg_replace('/[^A-Za-z0-9\.]/', '.', trim($preRelease));
-		$preRelease = trim(preg_replace('/\.+/', '.', $preRelease), '.');
-
-		$this->preRelease = empty($preRelease) === true ? null : $preRelease;
+		$this->preRelease = $this->normalizeLabelString($preRelease);
 
 		return $this;
 	}
@@ -310,12 +333,21 @@ class VersionTool {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function setBuild($build) {
-		$build = preg_replace('/[^A-Za-z0-9\.]/', '.', trim($build));
-		$build = trim(preg_replace('/\.+/', '.', $build), '.');
-
-		$this->build = empty($build) === true ? null : $build;
+		$this->build = $this->normalizeLabelString($build);
 
 		return $this;
+	}
+
+	/**
+	 * @param string $label
+	 * @return string
+	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	protected function normalizeLabelString($label) {
+		$label = preg_replace('/[^A-Za-z0-9\.]/', '.', trim($label));
+		$label = trim(preg_replace('/\.+/', '.', $label), '.');
+
+		return empty($label) === true ? null : $label;
 	}
 
 	/**
@@ -420,8 +452,10 @@ class VersionTool {
 					'build' => $this->build,
 					'deployTimestamp' => $this->deployTimestamp,
 					'license' => $this->license,
+					'copyright' => $this->copyright,
 					'credits' => $credits,
 				),
+				'file' => $this->configFile,
 			),
 		);
 
@@ -446,6 +480,7 @@ class VersionTool {
 					->setBuild($this->getValueOrDefault($config['build'], $this->build))
 					->setDeployTimestamp($this->getValueOrDefault($config['deployTimestamp'], $this->deployTimestamp))
 					->setLicense($this->getValueOrDefault($config['license'], $this->license))
+					->setCopyright($this->getValueOrDefault($config['copyright'], $this->copyright))
 					->setCredits($this->getValueOrDefault($config['credits'], $this->credits));
 		}
 	}
@@ -468,7 +503,8 @@ class VersionTool {
 		return $this->major !== null &&
 				$this->minor !== false &&
 				$this->patch !== null &&
-				$this->license !== null;
+				$this->license !== null &&
+				$this->copyright !== null;
 	}
 
 }

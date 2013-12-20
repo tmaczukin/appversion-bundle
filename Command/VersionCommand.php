@@ -76,7 +76,8 @@ class VersionCommand extends ContainerAwareCommand {
 				->addOption('pre-release', null, InputOption::VALUE_REQUIRED, 'Set preRelease version part')
 				->addOption('build', null, InputOption::VALUE_REQUIRED, 'Set build version part')
 				->addOption('deploy-timestamp', null, InputOption::VALUE_REQUIRED, 'Set deploy timestamp')
-				->addOption('license', null, InputOption::VALUE_REQUIRED, 'Set application license id');
+				->addOption('license', null, InputOption::VALUE_REQUIRED, 'Set application license id')
+				->addOption('copyright', null, InputOption::VALUE_REQUIRED, 'Set application copyright');
 	}
 
 	/**
@@ -168,6 +169,7 @@ class VersionCommand extends ContainerAwareCommand {
 		$this->setValue($this->input->getOption('build'), array($version, 'setBuild'));
 		$this->setValue($this->input->getOption('deploy-timestamp'), array($version, 'setDeployTimestamp'));
 		$this->setValue($this->input->getOption('license'), array($version, 'setLicense'));
+		$this->setValue($this->input->getOption('copyright'), array($version, 'setCopyright'));
 	}
 
 	/**
@@ -211,6 +213,9 @@ class VersionCommand extends ContainerAwareCommand {
 
 		$defaultLicense = $version->getLicense();
 		$version->setLicense($dialog->ask($this->output, sprintf('<value>license [<value-important>%s<value>]: ', $defaultLicense), $defaultLicense));
+
+		$defaultCopyright = $version->getCopyright();
+		$version->setCopyright($dialog->ask($this->output, sprintf('<value>copyright [<value-important>%s<value>]: ', $defaultCopyright), $defaultCopyright));
 	}
 
 	/**
@@ -256,6 +261,7 @@ class VersionCommand extends ContainerAwareCommand {
 		$this->printField("<row>           Build:  <value>%s", $version->getBuild());
 		$this->printField("<row> DeployTimestamp:  <value>%s", $version->getDeployTimestamp());
 		$this->printField("<row>         License:  <value>%s", $version->getLicense());
+		$this->printField("<row>       Copyright:  <value>%s", $version->getCopyright());
 		$this->printField("<row>          Commit:  <value>%s", $version->getCommit());
 	}
 

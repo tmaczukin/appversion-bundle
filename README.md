@@ -75,6 +75,7 @@ Version file schema:
 			build: build.20131220004631
 			deployTimestamp: '2013-12-20 00:51:13'
 			license: MIT
+			copyright: '2013 by Tomasz Maczukin'
 			credits:
 			  - 'Tomasz Maczukin <tomasz@maczukin.pl>'
     file: %kernel.root_dir%/config/version.yml
@@ -87,6 +88,7 @@ Version file schema:
   * build - build version label (from Semantic Versioning)
   * deployTimestamp - timestamp of last application deploy; usefull when you deploy your applications often and you want your users to know when the last version was installed
   * license - identification of license under which you have released your application
+  * copyright - your application copyright string
   * credits - array containing names and e-mails of the authors and contributors
 * file - path to the version.yml file
 
@@ -107,7 +109,7 @@ This command executed without any parameters will output current version informa
 			   Build:  build.20131220004631
 	 DeployTimestamp:  2013-12-20 00:51:13
 			 License:  MIT
-			  Commit:  Error occured or git is not supported!
+		   Copyright:  2013 by Tomasz Maczukin
 
 	-----------------------------------------------------------------
 
@@ -121,7 +123,7 @@ You can output a default version format by using `{{ version_tools }}`, set your
 
 ## TODO for version
 
-* [1.0.0] add copyrights informations to version info (validation.yml and output)
+* ~~[1.0.0] add copyrights informations to version info (validation.yml and output)~~
 * ~~[1.0.0] rename Maczukin\VersionsToolBundle\Tool\Version to Maczukin\VersionsToolBundle\Tool\VersionTool~~
 * [1.0.0] use maczukin_version_tools.file setting in VersionTool
 * [?] add configuration for continuous integration software (travis or jenkins) with static code analysis and generating documentation from PHPDoc comment blocks

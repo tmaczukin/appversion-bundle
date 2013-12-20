@@ -54,6 +54,7 @@ class Configuration implements ConfigurationInterface {
 				->scalarNode('build')->defaultNull()->end()
 				->scalarNode('deployTimestamp')->defaultNull()->end()
 				->scalarNode('license')->defaultNull()->end()
+				->scalarNode('copyright')->defaultNull()->end()
 				->arrayNode('credits')->prototype('scalar')->defaultNull()->end()->end()
 				->end()
 				->end()
