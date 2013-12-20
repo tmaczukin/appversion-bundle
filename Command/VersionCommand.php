@@ -194,13 +194,13 @@ class VersionCommand extends ContainerAwareCommand {
 		$version = $this->getVersionTool();
 
 		$defaultMajor = $version->getMajor();
-		$version->setMajor($dialog->ask($this->output, sprintf('<value>major [<value-important>%s<value>]: ', $defaultMajor), $defaultMajor));
+		$version->setMajor($dialog->ask($this->output, sprintf('<value>*major [<value-important>%s<value>]: ', $defaultMajor), $defaultMajor));
 
 		$defaultMinor = $version->getMinor();
-		$version->setMinor($dialog->ask($this->output, sprintf('<value>minor [<value-important>%s<value>]: ', $defaultMinor), $defaultMinor));
+		$version->setMinor($dialog->ask($this->output, sprintf('<value>*minor [<value-important>%s<value>]: ', $defaultMinor), $defaultMinor));
 
 		$defaultPatch = $version->getPatch();
-		$version->setPatch($dialog->ask($this->output, sprintf('<value>patch [<value-important>%s<value>]: ', $defaultPatch), $defaultPatch));
+		$version->setPatch($dialog->ask($this->output, sprintf('<value>*patch [<value-important>%s<value>]: ', $defaultPatch), $defaultPatch));
 
 		$defaultPreRelease = $version->getPreRelease();
 		$version->setPreRelease($dialog->ask($this->output, sprintf('<value>pre-release [<value-important>%s<value>]: ', $defaultPreRelease), $defaultPreRelease));
@@ -212,10 +212,10 @@ class VersionCommand extends ContainerAwareCommand {
 		$version->setDeployTimestamp($dialog->ask($this->output, sprintf('<value>deploy-timestamp [<value-important>%s<value>]: ', $defaultDeployTimestamp), $defaultDeployTimestamp));
 
 		$defaultLicense = $version->getLicense();
-		$version->setLicense($dialog->ask($this->output, sprintf('<value>license [<value-important>%s<value>]: ', $defaultLicense), $defaultLicense));
+		$version->setLicense($dialog->ask($this->output, sprintf('<value>*license [<value-important>%s<value>]: ', $defaultLicense), $defaultLicense));
 
 		$defaultCopyright = $version->getCopyright();
-		$version->setCopyright($dialog->ask($this->output, sprintf('<value>copyright [<value-important>%s<value>]: ', $defaultCopyright), $defaultCopyright));
+		$version->setCopyright($dialog->ask($this->output, sprintf('<value>*copyright [<value-important>%s<value>]: ', $defaultCopyright), $defaultCopyright));
 	}
 
 	/**

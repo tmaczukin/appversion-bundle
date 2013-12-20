@@ -51,6 +51,11 @@ class MaczukinVersionToolsExtension extends Extension {
 			}
 		}
 
+		if (isset($config['file']) === true) {
+			$container->setParameter('maczukin_version_tools.file', $config['file']);
+		}
+
+
 		$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 		$loader->load('services.yml');
 	}

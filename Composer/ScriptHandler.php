@@ -95,7 +95,7 @@ class ScriptHandler {
 	protected function getVersion($versioningFile) {
 		$version = new VersionTool();
 		$version
-				->setConfigFile($versioningFile)
+				->setFile($versioningFile)
 				->readFile();
 
 		if ($version->isValid() === true) {
@@ -128,14 +128,14 @@ class ScriptHandler {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	protected function setMainInformation(VersionTool $version) {
-		$major = $this->getValue('major', $version->getMajor());
-		$minor = $this->getValue('minor', $version->getMinor());
-		$patch = $this->getValue('patch', $version->getPatch());
+		$major = $this->getValue('*major', $version->getMajor());
+		$minor = $this->getValue('*minor', $version->getMinor());
+		$patch = $this->getValue('*patch', $version->getPatch());
 		$preRelease = $this->getValue('pre-release', $version->getPreRelease());
 		$build = $this->getValue('build', $version->getBuild());
 		$deployTimestamp = $this->getValue('deploy-timestamp', $version->getDeployTimestamp());
-		$license = $this->getValue('license', $version->getLicense());
-		$copyright = $this->getValue('copyright', $version->getCopyright());
+		$license = $this->getValue('*license', $version->getLicense());
+		$copyright = $this->getValue('*copyright', $version->getCopyright());
 
 		$version
 				->setMajor($major)

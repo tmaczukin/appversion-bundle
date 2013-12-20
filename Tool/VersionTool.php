@@ -47,7 +47,12 @@ class VersionTool {
 	/**
 	 * @var string
 	 */
-	protected $configFile;
+	protected $file;
+
+	/**
+	 * @var string
+	 */
+	protected $realFile;
 
 	/**
 	 * @var string
@@ -111,19 +116,19 @@ class VersionTool {
 	 */
 	public function setContainer(ContainerInterface $container) {
 		$this->container = $container;
-		$this->configFile = realpath($this->container->getParameter('kernel.root_dir').DIRECTORY_SEPARATOR.'config').DIRECTORY_SEPARATOR.'version.yml';
 		$this->environment = $this->container->get('kernel')->getEnvironment();
 
 		$this->setCommit()
-				->setMajor($this->getContainerParameter('major'))
-				->setMinor($this->getContainerParameter('minor'))
-				->setPatch($this->getContainerParameter('patch'))
-				->setPreRelease($this->getContainerParameter('preRelease'))
-				->setBuild($this->getContainerParameter('build'))
-				->setDeployTimestamp($this->getContainerParameter('deployTimestamp'))
-				->setLicense($this->getContainerParameter('license'))
-				->setCopyright($this->getContainerParameter('copyright'))
-				->setCredits($this->getContainerParameter('credits'));
+				->setMajor($this->getContainerParameter('version.major'))
+				->setMinor($this->getContainerParameter('version.minor'))
+				->setPatch($this->getContainerParameter('version.patch'))
+				->setPreRelease($this->getContainerParameter('version.preRelease'))
+				->setBuild($this->getContainerParameter('version.build'))
+				->setDeployTimestamp($this->getContainerParameter('version.deployTimestamp'))
+				->setLicense($this->getContainerParameter('version.license'))
+				->setCopyright($this->getContainerParameter('version.copyright'))
+				->setCredits($this->getContainerParameter('version.credits'))
+				->setFile($this->getContainerParameter('file'));
 
 		return $this;
 	}
@@ -134,12 +139,13 @@ class VersionTool {
 	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	private function getContainerParameter($name) {
-		$parameter = 'maczukin_version_tools.version.'.$name;
+		$parameter = 'maczukin_version_tools.'.$name;
 
 		if ($this->container->hasParameter($parameter) === true) {
 			return $this->container->getParameter($parameter);
 		}
 
+		$name = str_replace('version.', '', $name);
 		if (property_exists($this, $name) === true) {
 			return $this->$name;
 		}
@@ -148,14 +154,47 @@ class VersionTool {
 	}
 
 	/**
-	 * @param string $configFile
+	 * @param string $file
 	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
-	public function setConfigFile($configFile) {
-		$this->configFile = $configFile;
+	public function setFile($file) {
+		$this->realFile = dirname($file).DIRECTORY_SEPARATOR.basename($file);
+
+		list($rootDir, $appDir) = $this->getRootAndAppDir();
+
+		if (strpos($file, $appDir) === 0) {
+			$this->file = str_replace($appDir, '%kernel.root_dir%', $file);
+		}
+		elseif (strpos($file, $rootDir) === 0) {
+			$this->file = str_replace($rootDir, '%kernel.root_dir%/..', $file);
+		}
+		elseif (preg_match('#^/#', $file) < 1) {
+			$file = $rootDir.DIRECTORY_SEPARATOR.$file;
+			return $this->setFile($file);
+		}
+		elseif (preg_match('#^/#', $file) >= 1) {
+			$this->file = $file;
+		}
 
 		return $this;
+	}
+
+	/**
+	 * @return array
+	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	private function getRootAndAppDir() {
+		if ($this->container === null) {
+			$rootDir = getcwd();
+			$appDir = realpath($rootDir.DIRECTORY_SEPARATOR.'app');
+		}
+		else {
+			$appDir = realpath($this->container->get('kernel')->getRootDir());
+			$rootDir = realpath($appDir.DIRECTORY_SEPARATOR.'..');
+		}
+
+		return ($rootDir, $appDir);
 	}
 
 	/**
@@ -455,12 +494,12 @@ class VersionTool {
 					'copyright' => $this->copyright,
 					'credits' => $credits,
 				),
-				'file' => $this->configFile,
+				'file' => $this->file,
 			),
 		);
 
 		$fileSystem = new Filesystem();
-		$fileSystem->dumpFile($this->configFile, "# This file is auto-generated\n".Yaml::dump($config, 4));
+		$fileSystem->dumpFile($this->realFile, "# This file is auto-generated\n".Yaml::dump($config, 4));
 	}
 
 	/**
@@ -468,8 +507,8 @@ class VersionTool {
 	 */
 	public function readFile() {
 		$fileSystem = new Filesystem();
-		if ($fileSystem->exists($this->configFile) === true) {
-			$yaml = Yaml::parse(file_get_contents($this->configFile));
+		if ($fileSystem->exists($this->realFile) === true) {
+			$yaml = Yaml::parse(file_get_contents($this->realFile));
 			$config = &$yaml['maczukin_version_tools']['version'];
 
 			$this
