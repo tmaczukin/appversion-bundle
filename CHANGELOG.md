@@ -1,4 +1,9 @@
 
+1.0.1 / 2013-12-21
+==================
+
+ * Replaced system() with exec() when determining commit information
+
 1.0.0 / 2013-12-21
 ==================
 
