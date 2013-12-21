@@ -265,7 +265,7 @@ class VersionTool {
 			return $this;
 		}
 
-		$commit = system('git describe 2>/dev/null', $return);
+		$commit = exec('git describe 2>/dev/null', $output, $return);
 
 		$error = $return !== 0 ? 'Error occured or git is not supported!' : null;
 		$this->commit = empty($commit) !== true ? $commit : $error;
