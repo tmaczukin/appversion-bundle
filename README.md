@@ -8,7 +8,9 @@ Supported version format is compatibile with 'Semantic Versioning 2.0.0' specifi
 
 I am using "git-flow" for development workflow. More info about it can be found at https://github.com/nvie/gitflow/.
 
-Project is now in beta development mode. There are few tasks on todo list before it will be released as 1.0.0 version.
+Version 1.0.0 was released at 2013-12-21.
+
+There are still few tasks on todo list.
 
 Bundle is released on MIT License. Feel free to fork and contribute to this project.
 
