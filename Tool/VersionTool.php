@@ -26,9 +26,7 @@
 
 namespace Maczukin\VersionToolsBundle\Tool;
 
-use Symfony\Component\DependencyInjection\ContainerInterface,
-	Symfony\Component\Filesystem\Filesystem,
-	Symfony\Component\Yaml\Yaml;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * VersionTool
@@ -110,6 +108,18 @@ class VersionTool {
 	protected $credits = array();
 
 	/**
+	 * @var VersionFileTool
+	 */
+	protected $versionFileTool;
+
+	/**
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function __construct() {
+		$this->versionFileTool = new VersionFileTool($this);
+	}
+
+	/**
 	 * @param ContainerInterface $container
 	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
@@ -154,6 +164,14 @@ class VersionTool {
 	}
 
 	/**
+	 * @return string
+	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function getFile() {
+		return $this->file;
+	}
+
+	/**
 	 * @param string $file
 	 * @return VersionTool
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
@@ -194,7 +212,7 @@ class VersionTool {
 			$rootDir = realpath($appDir.DIRECTORY_SEPARATOR.'..');
 		}
 
-		return ($rootDir, $appDir);
+		return array($rootDir, $appDir);
 	}
 
 	/**
@@ -475,63 +493,14 @@ class VersionTool {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function dumpConfig() {
-		$credits = array();
-		foreach ($this->credits as $author => $email) {
-			$email = empty($email) === false ? " <{$email}>" : null;
-			$credits[] = "{$author}{$email}";
-		}
-
-		$config = array(
-			'maczukin_version_tools' => array(
-				'version' => array(
-					'major' => $this->major,
-					'minor' => $this->minor,
-					'patch' => $this->patch,
-					'preRelease' => $this->preRelease,
-					'build' => $this->build,
-					'deployTimestamp' => $this->deployTimestamp,
-					'license' => $this->license,
-					'copyright' => $this->copyright,
-					'credits' => $credits,
-				),
-				'file' => $this->file,
-			),
-		);
-
-		$fileSystem = new Filesystem();
-		$fileSystem->dumpFile($this->realFile, "# This file is auto-generated\n".Yaml::dump($config, 4));
+		$this->versionFileTool->dump($this->realFile);
 	}
 
 	/**
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function readFile() {
-		$fileSystem = new Filesystem();
-		if ($fileSystem->exists($this->realFile) === true) {
-			$yaml = Yaml::parse(file_get_contents($this->realFile));
-			$config = &$yaml['maczukin_version_tools']['version'];
-
-			$this
-					->setMajor($this->getValueOrDefault($config['major'], $this->major))
-					->setMinor($this->getValueOrDefault($config['minor'], $this->minor))
-					->setPatch($this->getValueOrDefault($config['patch'], $this->patch))
-					->setPreRelease($this->getValueOrDefault($config['preRelease'], $this->preRelease))
-					->setBuild($this->getValueOrDefault($config['build'], $this->build))
-					->setDeployTimestamp($this->getValueOrDefault($config['deployTimestamp'], $this->deployTimestamp))
-					->setLicense($this->getValueOrDefault($config['license'], $this->license))
-					->setCopyright($this->getValueOrDefault($config['copyright'], $this->copyright))
-					->setCredits($this->getValueOrDefault($config['credits'], $this->credits));
-		}
-	}
-
-	/**
-	 * @param mixed $value
-	 * @param mixed $default
-	 * @return mixed
-	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
-	 */
-	protected function getValueOrDefault($value, $default) {
-		return isset($value) === true ? $value : $default;
+		$this->versionFileTool->read($this->realFile);
 	}
 
 	/**
