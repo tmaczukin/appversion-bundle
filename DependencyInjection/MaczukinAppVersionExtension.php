@@ -27,6 +27,7 @@
 namespace Maczukin\AppVersionBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder,
+	Symfony\Component\DependencyInjection\DefinitionDecorator,
 	Symfony\Component\Config\FileLocator,
 	Symfony\Component\HttpKernel\DependencyInjection\Extension,
 	Symfony\Component\DependencyInjection\Loader;
@@ -45,18 +46,60 @@ class MaczukinAppVersionExtension extends Extension {
 		$configuration = new Configuration();
 		$config = $this->processConfiguration($configuration, $configs);
 
-		if (isset($config['version']) === true) {
-			foreach ($config['version'] as $key => $value) {
-				$container->setParameter('appversion.version.'.$key, $value);
-			}
-		}
-
-		if (isset($config['file']) === true) {
-			$container->setParameter('appversion.file', $config['file']);
-		}
+		$this->setVersionParameters($container, $config);
+		$this->setFileParameter($container, $config);
+		$this->applyAssetsVersion($container, $config);
 
 		$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 		$loader->load('services.yml');
+	}
+
+	/**
+	 * @param ContainerBuilder $container
+	 * @param array $config
+	 * @return boolean
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	protected function setVersionParameters(ContainerBuilder $container, array $config) {
+		if (isset($config['version']) !== true) {
+			return false;
+		}
+
+		foreach ($config['version'] as $key => $value) {
+			$container->setParameter('appversion.version.'.$key, $value);
+		}
+	}
+
+	/**
+	 * @param ContainerBuilder $container
+	 * @param array $config
+	 * @return boolean
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	protected function setFileParameter(ContainerBuilder $container, array $config) {
+		if (isset($config['file']) !== true) {
+			return false;
+		}
+
+		$container->setParameter('appversion.file', $config['file']);
+	}
+
+	/**
+	 * @param ContainerBuilder $container
+	 * @param array $config
+	 * @return boolean
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	protected function applyAssetsVersion(ContainerBuilder $container, array $config) {
+		if ($config['applyAssets'] !== true || isset($config['version']['deployTimestamp']) !== true) {
+			return false;
+		}
+
+		$package = new DefinitionDecorator('templating.asset.url_package');
+		$package
+				->setPublic(false)
+				->replaceArgument(1, strtotime($config['version']['deployTimestamp']));
+		$container->setDefinition('templating.asset.default_package', $package);
 	}
 
 }

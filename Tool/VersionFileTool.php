@@ -61,6 +61,7 @@ class VersionFileTool {
 
 		$yaml = Yaml::parse(file_get_contents($file));
 		$config = &$yaml['maczukin_app_version']['version'];
+		$applyAssets = &$yaml['maczukin_app_version']['applyAssets'];
 
 		$this->versionTool
 				->setMajor($this->getValueOrDefault($config['major'], $this->versionTool->getMajor()))
@@ -71,7 +72,8 @@ class VersionFileTool {
 				->setDeployTimestamp($this->getValueOrDefault($config['deployTimestamp'], $this->versionTool->getDeployTimestamp()))
 				->setLicense($this->getValueOrDefault($config['license'], $this->versionTool->getLicense()))
 				->setCopyright($this->getValueOrDefault($config['copyright'], $this->versionTool->getCopyright()))
-				->setCredits($this->getValueOrDefault($config['credits'], $this->versionTool->getCredits()));
+				->setCredits($this->getValueOrDefault($config['credits'], $this->versionTool->getCredits()))
+				->setApplyAssets($this->getValueOrDefault($applyAssets, $this->versionTool->getApplyAssets()));
 	}
 
 	/**
@@ -109,6 +111,7 @@ class VersionFileTool {
 					'credits' => $credits,
 				),
 				'file' => $this->versionTool->getFile(),
+				'applyAssets' => $this->versionTool->getApplyAssets(),
 			),
 		);
 

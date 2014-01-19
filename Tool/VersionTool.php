@@ -43,6 +43,11 @@ class VersionTool {
 	protected $container;
 
 	/**
+	 * @var boolean
+	 */
+	protected $applyAssets = false;
+
+	/**
 	 * @var string
 	 */
 	protected $file;
@@ -246,6 +251,25 @@ class VersionTool {
 	 */
 	public function __toString() {
 		return $this->getVersionString();
+	}
+
+	/**
+	 * @return boolean
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function getApplyAssets() {
+		return $this->applyAssets;
+	}
+
+	/**
+	 * @param boolean $applyAssets
+	 * @return VersionTool
+	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
+	 */
+	public function setApplyAssets($applyAssets) {
+		$this->applyAssets = (boolean) $applyAssets;
+
+		return $this;
 	}
 
 	/**
