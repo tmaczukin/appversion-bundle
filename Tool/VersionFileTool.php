@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\Tool;
+namespace Maczukin\AppVersionBundle\Tool;
 
 use Symfony\Component\Filesystem\Filesystem,
 	Symfony\Component\Yaml\Yaml;
@@ -60,7 +60,7 @@ class VersionFileTool {
 		}
 
 		$yaml = Yaml::parse(file_get_contents($file));
-		$config = &$yaml['maczukin_version_tools']['version'];
+		$config = &$yaml['maczukin_app_version']['version'];
 
 		$this->versionTool
 				->setMajor($this->getValueOrDefault($config['major'], $this->versionTool->getMajor()))
@@ -96,7 +96,7 @@ class VersionFileTool {
 		}
 
 		$config = array(
-			'maczukin_version_tools' => array(
+			'maczukin_app_version' => array(
 				'version' => array(
 					'major' => $this->versionTool->getMajor(),
 					'minor' => $this->versionTool->getMinor(),

@@ -24,11 +24,11 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\Composer;
+namespace Maczukin\AppVersionBundle\Composer;
 
 use Composer\Script\Event,
 	Composer\IO\IOInterface;
-use Maczukin\VersionToolsBundle\Tool\VersionTool;
+use Maczukin\AppVersionBundle\Tool\VersionTool;
 
 /**
  * ScriptHandler
@@ -61,7 +61,7 @@ class ScriptHandler {
 		$extras = $event->getComposer()->getPackage()->getExtra();
 
 		$this->isConfigurationValid($extras);
-		if (($version = $this->getVersion($extras['maczukin_version_tools_parameters']['version-file'])) === null) {
+		if (($version = $this->getVersion($extras['maczukin_appversion_parameters']['version-file'])) === null) {
 			return null;
 		}
 
@@ -79,9 +79,9 @@ class ScriptHandler {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	protected function isConfigurationValid(array $extras) {
-		if (isset($extras['maczukin_version_tools_parameters']) === false ||
-				isset($extras['maczukin_version_tools_parameters']['version-file']) === false) {
-			throw new \InvalidArgumentException('The extra.maczukin_version_tools_parameters.version-file setting is required to use this script handler.');
+		if (isset($extras['maczukin_appversion_parameters']) === false ||
+				isset($extras['maczukin_appversion_parameters']['version-file']) === false) {
+			throw new \InvalidArgumentException('The extra.maczukin_appversion_parameters.version-file setting is required to use this script handler.');
 		}
 
 		return true;

@@ -24,15 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle;
+namespace Maczukin\AppVersionBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * MaczukinVersionToolsBundle
+ * MaczukinAppVersionBundle
  *
  * @author Tomasz Maczukin <tomasz@maczukin.pl>
  */
-class MaczukinVersionToolsBundle extends Bundle {
+class MaczukinAppVersionBundle extends Bundle {
 
 }
