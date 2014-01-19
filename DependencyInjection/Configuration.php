@@ -58,7 +58,8 @@ class Configuration implements ConfigurationInterface {
 				->arrayNode('credits')->prototype('scalar')->defaultNull()->end()->end()
 				->end()
 				->end()
-				->scalarNode('file')->defaultNull('%kernel.root_dir%/config/version.yml')->end()
+				->scalarNode('file')->defaultValue('%kernel.root_dir%/config/version.yml')->end()
+				->booleanNode('applyAssets')->defaultTrue()->end()
 				->end();
 
 		return $treeBuilder;
