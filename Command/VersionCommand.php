@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\Command;
+namespace Maczukin\AppVersionBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
 	Symfony\Component\Console\Formatter\OutputFormatterStyle,
@@ -32,7 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
 	Symfony\Component\Console\Input\InputInterface,
 	Symfony\Component\Console\Input\InputOption,
 	Symfony\Component\Console\Output\OutputInterface;
-use Maczukin\VersionToolsBundle\Tool\VersionTool;
+use Maczukin\AppVersionBundle\Tool\VersionTool;
 
 /**
  * VersionCommand
@@ -235,7 +235,7 @@ class VersionCommand extends ContainerAwareCommand {
 	 */
 	protected function printHeader() {
 		$this->output->writeln("<border>-----------------------------------------------------------------");
-		$this->output->writeln("<info>    Version info is provided by maczukin/version-tools-bundle");
+		$this->output->writeln("<info>    Version info is provided by maczukin/appversion-bundle");
 		$this->output->writeln("<border>-----------------------------------------------------------------");
 	}
 
@@ -311,7 +311,7 @@ class VersionCommand extends ContainerAwareCommand {
 	 */
 	protected function getVersionTool() {
 		if ($this->versionTool === null) {
-			$this->versionTool = $this->getContainer()->get('maczukin_version_tools.version');
+			$this->versionTool = $this->getContainer()->get('maczukin_appversion.version');
 		}
 
 		return $this->versionTool;

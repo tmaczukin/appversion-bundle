@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\DependencyInjection;
+namespace Maczukin\AppVersionBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder,
 	Symfony\Component\Config\FileLocator,
@@ -32,11 +32,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder,
 	Symfony\Component\DependencyInjection\Loader;
 
 /**
- * MaczukinVersionToolsExtension
+ * MaczukinAppVersionExtension
  *
  * @author Tomasz Maczukin <tomasz@maczukin.pl>
  */
-class MaczukinVersionToolsExtension extends Extension {
+class MaczukinAppVersionExtension extends Extension {
 
 	/**
 	 * {@inheritDoc}
@@ -47,12 +47,12 @@ class MaczukinVersionToolsExtension extends Extension {
 
 		if (isset($config['version']) === true) {
 			foreach ($config['version'] as $key => $value) {
-				$container->setParameter('maczukin_version_tools.version.'.$key, $value);
+				$container->setParameter('appversion.version.'.$key, $value);
 			}
 		}
 
 		if (isset($config['file']) === true) {
-			$container->setParameter('maczukin_version_tools.file', $config['file']);
+			$container->setParameter('appversion.file', $config['file']);
 		}
 
 		$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

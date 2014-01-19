@@ -24,9 +24,9 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\Twig\Extension;
+namespace Maczukin\AppVersionBundle\Twig\Extension;
 
-use Maczukin\VersionToolsBundle\Tool\VersionTool;
+use Maczukin\AppVersionBundle\Tool\VersionTool;
 
 /**
  * Version
@@ -53,7 +53,7 @@ class Version extends \Twig_Extension {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	public function getName() {
-		return 'maczukin_versioning_tools.twig.version';
+		return 'maczukin_appversion.twig.version';
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Version extends \Twig_Extension {
 	 */
 	public function getGlobals() {
 		return array(
-			'version_tools' => $this->versionTool,
+			'appversion' => $this->versionTool,
 		);
 	}
 

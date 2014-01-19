@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\Tool;
+namespace Maczukin\AppVersionBundle\Tool;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -149,7 +149,7 @@ class VersionTool {
 	 * @author	Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	private function getContainerParameter($name) {
-		$parameter = 'maczukin_version_tools.'.$name;
+		$parameter = 'appversion.'.$name;
 
 		if ($this->container->hasParameter($parameter) === true) {
 			return $this->container->getParameter($parameter);

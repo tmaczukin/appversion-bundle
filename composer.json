@@ -1,5 +1,5 @@
 {
-	"name": "maczukin/version-tools-bundle",
+	"name": "maczukin/appversion-bundle",
 	"description": "Version tools for application",
 	"license": "MIT",
 	"authors": [
@@ -22,8 +22,8 @@
 		"composer/composer": "*"
 	},
 	"autoload": {
-		"psr-0": {"Maczukin\\VersionToolsBundle": ""}
+		"psr-0": {"Maczukin\\AppVersionBundle": ""}
 	},
-	"target-dir": "Maczukin/VersionToolsBundle",
+	"target-dir": "Maczukin/AppVersionBundle",
 	"minimum-stability": "dev"
 }

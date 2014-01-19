@@ -1,4 +1,4 @@
-# VersionToolsBundle
+# AppVersionBundle
 
 This bundle contains tools for managing and retrieving information about your application version.
 
@@ -20,23 +20,23 @@ Add changes in your composer.json...
 
 	"require": {
 		...
-		"maczukin/version-tools-bundle": "dev-master",
+		"maczukin/appversion-bundle": "dev-master",
 		...
 	},
 	"scripts": {
 		"post-install-cmd": [
 			...
-			"Maczukin\\VersionToolsBundle\\Composer\\ScriptHandler::prepareVersionFile",
+			"Maczukin\\AppVersionBundle\\Composer\\ScriptHandler::prepareVersionFile",
 			...
 		],
 		"post-update-cmd": [
 			...
-			"Maczukin\\VersionToolsBundle\\Composer\\ScriptHandler::prepareVersionFile",
+			"Maczukin\\AppVersionBundle\\Composer\\ScriptHandler::prepareVersionFile",
 			...
 		]
 	},
 	"extra": {
-		"maczukin_version_tools_parameters": {
+		"maczukin_appversion_parameters": {
 			"version-file": "app/config/version.yml"
 		}
 	}
@@ -57,7 +57,7 @@ Add changes in your composer.json...
 		public function registerBundles() {
 			$bundles = array(
 				...
-				new Maczukin\VersionToolsBundle\MaczukinVersionToolsBundle(),
+				new Maczukin\AppVersionBundle\MaczukinAppVersionBundle(),
 				...
 			);
 
@@ -68,7 +68,7 @@ While installing with composer you will be asked to give information about curre
 Version file schema:
 
 	# This file is auto-generated
-	maczukin_version_tools:
+	appversion:
 		version:
 			major: 0
 			minor: 5
@@ -99,7 +99,7 @@ You can change those informations at any time by editing the version.yml file or
 This command executed without any parameters will output current version information. Configuration shown above will generate:
 
 	-----------------------------------------------------------------
-		Version info is provided by maczukin/version-tools-bundle
+		Version info is provided by maczukin/appversion-bundle
 	-----------------------------------------------------------------
 
 		 Environment:  dev
@@ -121,12 +121,12 @@ This command executed without any parameters will output current version informa
 
 In addition to the command console there is also available a twig extension. In any of your twig templates you can use 'version_tools' object.
 
-You can output a default version format by using `{{ version_tools }}`, set your own format `{{ version_tools.versionString('%major%.%minor%.%patch%%pre-release%%build%') }}` or use object like an entity and output individual object fields, eg. `{{ version_tools.major }}`.
+You can output a default version format by using `{{ appversion }}`, set your own format `{{ appversion.versionString('%major%.%minor%.%patch%%pre-release%%build%') }}` or use object like an entity and output individual object fields, eg. `{{ appversion.major }}`.
 
 ## TODO
 
-* ~~[1.0.0] add copyrights informations to version info (validation.yml and output)~~
-* ~~[1.0.0] rename Maczukin\VersionsToolBundle\Tool\Version to Maczukin\VersionsToolBundle\Tool\VersionTool~~
-* ~~[1.0.0] use maczukin_version_tools.file setting in VersionTool~~
+* ~~[1.0.0] add copyrights informations to version info (version.yml and output)~~
+* ~~[1.0.0] rename Maczukin\AppVersionBundle\Tool\Version to Maczukin\AppVersionBundle\Tool\VersionTool~~
+* ~~[1.0.0] use appversion.file setting in VersionTool~~
 * [?] add configuration for continuous integration software (travis or jenkins) with static code analysis and generating documentation from PHPDoc comment blocks
 * [?] add unit tests and integrate them with CI software

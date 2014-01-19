@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Maczukin\VersionToolsBundle\DependencyInjection;
+namespace Maczukin\AppVersionBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder,
 	Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function getConfigTreeBuilder() {
 		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('maczukin_version_tools');
+		$rootNode = $treeBuilder->root('maczukin_app_version');
 
 		$rootNode
 				->children()

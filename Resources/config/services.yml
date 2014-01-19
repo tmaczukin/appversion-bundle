@@ -1,11 +1,11 @@
 services:
-  maczukin_version_tools.version:
-    class: Maczukin\VersionToolsBundle\Tool\VersionTool
+  maczukin_appversion.version:
+    class: Maczukin\AppVersionBundle\Tool\VersionTool
     calls:
       - [setContainer, ["@service_container"]]
 
-  maczukin_version_tools.twig.version:
-    class: Maczukin\VersionToolsBundle\Twig\Extension\Version
-    arguments: ["@maczukin_version_tools.version"]
+  maczukin_appversion.twig.version:
+    class: Maczukin\AppVersionBundle\Twig\Extension\Version
+    arguments: ["@maczukin_appversion.version"]
     tags:
       - {name: twig.extension}
