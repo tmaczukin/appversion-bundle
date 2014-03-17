@@ -91,6 +91,12 @@ class MaczukinAppVersionExtension extends Extension {
 	 * @author Tomasz Maczukin <tomasz@maczukin.pl>
 	 */
 	protected function applyAssetsVersion(ContainerBuilder $container, array $config) {
+	        if (isset($config['applyAssets']) !== true) {
+			return false;
+		}
+
+		$container->setParameter('appversion.applyAssets', $config['applyAssets']);
+
 		if ($config['applyAssets'] !== true || isset($config['version']['deployTimestamp']) !== true) {
 			return false;
 		}
