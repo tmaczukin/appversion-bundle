@@ -143,7 +143,8 @@ class VersionTool {
 				->setLicense($this->getContainerParameter('version.license'))
 				->setCopyright($this->getContainerParameter('version.copyright'))
 				->setCredits($this->getContainerParameter('version.credits'))
-				->setFile($this->getContainerParameter('file'));
+				->setFile($this->getContainerParameter('file'))
+				->setApplyAssets($this->getContainerParameter('applyAssets'));
 
 		return $this;
 	}

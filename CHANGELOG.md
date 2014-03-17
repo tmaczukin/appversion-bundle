@@ -1,3 +1,7 @@
+2.1.1 / 2014-03-17 
+==================
+
+ * Saving 'applyAssets' setting while updating version info
 
 2.1.0 / 2014-01-19
 ==================
@@ -27,3 +31,4 @@ First development version.
 
 * Iniitial code (migrated from old alpha version and repo)
 * Initial commit
+
