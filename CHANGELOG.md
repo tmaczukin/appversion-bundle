@@ -1,3 +1,9 @@
+
+2.2.0 / 2014-04-07
+==================
+
+ * Adding current branch name to git commit info
+
 2.1.1 / 2014-03-17 
 ==================
 
