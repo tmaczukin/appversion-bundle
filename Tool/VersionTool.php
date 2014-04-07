@@ -290,12 +290,22 @@ class VersionTool {
 			return $this;
 		}
 
-		$commit = exec('git describe 2>/dev/null', $output, $return);
+		$commit = exec('git describe 2>/dev/null', $output, $commitReturn);
 
-		$error = $return !== 0 ? 'Error occured or git is not supported!' : null;
+		$error = $commitReturn !== 0 ? 'Error occured or git is not supported!' : null;
 		$this->commit = empty($commit) !== true ? $commit : $error;
 
-		return $this;
+        $branch = exec(
+            'git status --porcelain -b  | egrep "^## (.*)\.\.\." -o | sed -r "s/^## (.*)\.\.\./\1/"',
+            $output,
+            $branchReturn
+        );
+
+        if ($branchReturn === 0) {
+            $this->commit .= empty($branch) !== true ? " | branch: {$branch}" : null;
+        }
+
+        return $this;
 	}
 
 	/**
